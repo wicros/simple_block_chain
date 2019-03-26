@@ -6,7 +6,7 @@ class CreateBlockTable < ActiveRecord::Migration[5.1]
       t.datetime :timestamp, null: false
       t.integer :difficulty, null: false, default: 0
       t.integer :nonce, null: false
-      t.string :status, null: false
+
 
       t.timestamps
       t.index :current_hash, unique: true

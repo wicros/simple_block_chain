@@ -1,19 +1,28 @@
 class Block < ApplicationRecord
   include Concerns::Security
   has_many :transactions
-  accepts_nested_attributes_for :transactions
 
-  STATUS = { verified: "verified", unverified: "unverified" }.freeze
+  DIFFICULITY = "0"
 
   before_create :initialize_hash
 
-  private
+  def self.mine_block
+    block = new
+    block.timestamp = Time.zone.now
+    block.previous_hash = Block.last!.current_hash
+    work_result = proof_of_work(block)
+    block.nonce = work_result[0]
+    block.current_hash = work_result[1]
+    block.difficulty = DIFFICULITY
+    block.save!
+  end
 
-  def initialize_hash
-    self.previous_hash = Block.last!.current_hash
-    self.timestamp = Time.zone.now
-    self.nonce = calculate_nonce
-    self.current_hash = calculate_hash(self)
-    self.status = STATUS[:unverified]
+  def self.proof_of_work(block)
+    nonce = 0
+    loop do
+      hash = calculate_hash(block, nonce)
+      return [nonce, hash] if hash.start_with?(DIFFICULITY)
+      nonce += 1
+    end
   end
 end

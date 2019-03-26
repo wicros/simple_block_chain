@@ -6,6 +6,7 @@ class CreateTranscationTable < ActiveRecord::Migration[5.1]
       t.string :to, null: false
       t.string :message, null: true
       t.decimal :amount, precision: 12, scale: 6, null: false
+      t.string :status, null: false, default: "unverified"
     end
   end
 end

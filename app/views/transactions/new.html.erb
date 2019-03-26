@@ -1,0 +1,14 @@
+<%= form_for @transaction, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
+  <%= f.label :from %>
+  <%= f.text_field :from %>
+
+  <%= f.label :to %>
+  <%= f.text_field :to %>
+
+  <%= f.label :message %>
+  <%= f.text_field :message %>
+
+  <%= f.label :amount %>
+  <%= f.text_field :amount %>
+  <%= f.submit "Create" %>
+<% end %>

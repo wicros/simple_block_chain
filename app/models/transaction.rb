@@ -1,9 +1,4 @@
 class Transaction < ApplicationRecord
-  belongs_to :block
-
-  def self.vaild_params?(params)
-    params[:from].present? &&
-      params[:to].present? &&
-      params[:amount].present?
-  end
+  belongs_to :block, optional: true
+  STATUS = { verified: "verified", unverified: "unverified" }.freeze
 end
