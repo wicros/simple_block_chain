@@ -1,24 +1,26 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+# simple_block_chain
 
 * Ruby version
+
+2.5.0
 
 * System dependencies
 
 * Configuration
 
+Install `gcc` to build native extension of ffi.
+
+```bash
+brew install gcc
+```
 * Database creation
+
+```bash
+bundle exec rake db:create
+```
 
 * Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+bundle exec rake db:migrate db:seed
+```
