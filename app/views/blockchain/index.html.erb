@@ -1,5 +1,6 @@
 <div>
   <%@blocks.each do |block| %>
-    <div><%= block.to_json %></div>
+    block: <div><%= block.to_json %></div>
+    transactions: <div><%= block.transactions.to_json %></div>
   <%end %>
 </div>

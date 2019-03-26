@@ -1,0 +1,21 @@
+<%= form_for @block do |f| %>
+  Transactions:
+  <ul>
+    <%= f.fields_for :transactions do |transaction_form| %>
+      <li>
+        <%= transaction_form.label :from %>
+        <%= transaction_form.text_field :from %>
+
+        <%= transaction_form.label :to %>
+        <%= transaction_form.text_field :to %>
+
+        <%= transaction_form.label :message %>
+        <%= transaction_form.text_field :message %>
+
+        <%= transaction_form.label :amount %>
+        <%= transaction_form.text_field :amount %>
+      </li>
+    <% end %>
+  </ul>
+  <%= f.submit "Create" %>
+<% end %>
