@@ -6,8 +6,8 @@ class BlockchainController < ApplicationController
     @blocks = Block.includes(:transactions).all
   end
 
-  def create
-    Block.mine_block
+  def new
+    Block.new.mine_block
     redirect_to action: "index"
   end
 

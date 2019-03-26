@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20190326023317) do
     t.datetime "timestamp", null: false
     t.integer "difficulty", default: 0, null: false
     t.integer "nonce", null: false
-    t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_hash"], name: "index_blocks_on_current_hash", unique: true
@@ -33,6 +32,7 @@ ActiveRecord::Schema.define(version: 20190326023317) do
     t.string "to", null: false
     t.string "message"
     t.decimal "amount", precision: 12, scale: 6, null: false
+    t.string "status", default: "unverified", null: false
     t.index ["block_id"], name: "index_transactions_on_block_id"
   end
 

@@ -1,7 +1,7 @@
 class TransactionsController < ApplicationController
 
   def index
-    @transactions = Transaction.all
+    @transactions = Transaction.where(status: Transaction::STATUS[:unverified])
   end
 
   def new
@@ -13,7 +13,7 @@ class TransactionsController < ApplicationController
                         to: params[:transaction][:to],
                         message: params[:transaction][:message],
                         amount: params[:transaction][:amount].to_i)
-    redirect_to controller: "blockchain", action: "home"
+    redirect_to action: "index"
   end
 
 end

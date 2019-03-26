@@ -4,20 +4,24 @@ class Block < ApplicationRecord
 
   DIFFICULITY = "0"
 
-  before_create :initialize_hash
-
-  def self.mine_block
-    block = new
-    block.timestamp = Time.zone.now
-    block.previous_hash = Block.last!.current_hash
-    work_result = proof_of_work(block)
-    block.nonce = work_result[0]
-    block.current_hash = work_result[1]
-    block.difficulty = DIFFICULITY
-    block.save!
+  def mine_block
+    transaction do
+      self.timestamp = Time.zone.now
+      self.previous_hash = Block.last!.current_hash
+      work_result = proof_of_work(self)
+      self.nonce = work_result[0]
+      self.current_hash = work_result[1]
+      self.difficulty = DIFFICULITY
+      save!
+      Transaction.where(status: Transaction::STATUS[:unverified]).each do |transaction|
+        transaction.update!(block: self, status: Transaction::STATUS[:verified])
+      end
+    end
   end
 
-  def self.proof_of_work(block)
+  private
+
+  def proof_of_work(block)
     nonce = 0
     loop do
       hash = calculate_hash(block, nonce)
