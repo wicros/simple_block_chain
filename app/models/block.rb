@@ -14,7 +14,7 @@ class Block < ApplicationRecord
       self.difficulty = DIFFICULITY
       save!
       Transaction.where(status: Transaction::STATUS[:unverified]).each do |transaction|
-        transaction.update!(block: self, status: Transaction::STATUS[:verified])
+        transaction.update!(block: self, status: Transaction::STATUS[:verified]) if transaction.sign_valid?
       end
     end
   end

@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20190326023317) do
     t.bigint "block_id"
     t.string "from", null: false
     t.string "to", null: false
-    t.string "message"
+    t.string "signature", null: false
     t.decimal "amount", precision: 12, scale: 6, null: false
     t.string "status", default: "unverified", null: false
     t.index ["block_id"], name: "index_transactions_on_block_id"

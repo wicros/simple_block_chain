@@ -9,4 +9,25 @@ module Concerns::Security
                                block.previous_hash +
                                nonce.to_s)
   end
+
+  def self.generate_key_pair
+    OpenSSL::PKey::RSA.new 2048
+  end
+
+  def hash_text(transaction)
+    Digest::SHA256.hexdigest [transaction.from, transaction.to, transaction.amount].join
+  end
+
+  def sign(transaction, private_key)
+    Base64.encode64(OpenSSL::PKey::RSA.new(private_key).private_encrypt(hash_text(transaction)))
+  end
+
+  def plaintext(signature, public_key)
+    OpenSSL::PKey::RSA.new(public_key).public_decrypt Base64.decode64(signature)
+  end
+
+  def valid_signature?(transaction)
+    hash_text(transaction) == plaintext(transaction.signature, transaction.from)
+  end
+
 end
