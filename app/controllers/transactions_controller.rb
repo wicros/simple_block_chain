@@ -9,7 +9,7 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    Transaction.create_with_sign! params
+    Transaction.create!(to: params[:transaction][:to], amount: params[:transaction][:amount].to_i)
     redirect_to action: "index"
   end
 
